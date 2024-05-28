@@ -1,7 +1,9 @@
 ﻿using BeatSaberMarkupLanguage.Animations;
 using ImageFactory.Models;
+using SiraUtil.Logging;
+using System;
+using System.Collections;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -28,16 +30,29 @@ namespace ImageFactory
             return new ProcessedAnimation(animationData.atlas, animationData.uvs, animationData.delays, animationData.width, animationData.height);
         }
 
-        private static Material _roundEdge = null!;
+        private static Material _uiNoGlowRoundEdgeMaterial = null!;
         public static Material UINoGlowRoundEdge
         {
             get
             {
-                if (_roundEdge == null)
+                if (_uiNoGlowRoundEdgeMaterial == null)
                 {
-                    _roundEdge = Resources.FindObjectsOfTypeAll<Material>().First(m => m.name == "UINoGlowRoundEdge");
+                    _uiNoGlowRoundEdgeMaterial = Resources.FindObjectsOfTypeAll<Material>().First(m => m.name == "UINoGlowRoundEdge");
                 }
-                return _roundEdge;
+                return _uiNoGlowRoundEdgeMaterial;
+            }
+        }
+
+        private static Material _spritesDefaultMaterial = null!;
+        public static Material SpritesDefaultMaterial
+        {
+            get
+            {
+                if (_spritesDefaultMaterial == null)
+                {
+                    _spritesDefaultMaterial = Resources.FindObjectsOfTypeAll<Material>().First(m => m.name == "Sprites-Default");
+                }
+                return _spritesDefaultMaterial;
             }
         }
 
@@ -51,6 +66,18 @@ namespace ImageFactory
                     _shader = Resources.FindObjectsOfTypeAll<Shader>().First(s => s.name == "Custom/CustomParticles");
                 }
                 return _shader;
+            }
+        }
+
+        public static void InitializeCustomCellTableviewData(BeatSaberMarkupLanguage.Components.CustomCellListTableData _imageList, IList data, SiraLog logger)
+        {
+            try
+            {
+                _imageList.data = data;
+            }
+            catch (Exception ex)
+            {
+                logger.Error($"Failed to add images to list: {ex.Message}\n{ex.StackTrace}");
             }
         }
     }

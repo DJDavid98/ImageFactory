@@ -5,7 +5,9 @@ using BeatSaberMarkupLanguage.ViewControllers;
 using HMUI;
 using ImageFactory.Managers;
 using ImageFactory.Models;
+using SiraUtil.Logging;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Tweening;
@@ -32,13 +34,16 @@ namespace ImageFactory.UI
 
         protected Config _config = null!;
 
+        protected SiraLog _siraLog = null!;
+
         [Inject]
-        protected void Construct(Config config, ImageManager imageManager, MetadataStore metadataStore, TimeTweeningManager TimeTweeningManager)
+        protected void Construct(Config config, ImageManager imageManager, MetadataStore metadataStore, TimeTweeningManager TimeTweeningManager, SiraLog siraLog)
         {
             _tweeningManager = TimeTweeningManager;
             _metadataStore = metadataStore;
             _imageManager = imageManager;
             _config = config;
+            _siraLog = siraLog;
         }
 
         #endregion
@@ -107,6 +112,7 @@ namespace ImageFactory.UI
             _imageList.data.Clear();
             _imageList.tableView.ReloadData();
 
+            var data = new List<EditImageCell>();
             foreach (var save in _config.SaveData)
             {
                 IFImage.Metadata? metadata = _imageManager.GetMetadata(save);
@@ -114,9 +120,10 @@ namespace ImageFactory.UI
                 {
                     var image = await _imageManager.LoadImage(metadata.Value);
                     if (image != null)
-                        _imageList.data.Add(new EditImageCell(image, save, ClickedImageEdit, ClickedImageDelete));
+                        data.Add(new EditImageCell(image, save, ClickedImageEdit, ClickedImageDelete));
                 }
             }
+            Utilities.InitializeCustomCellTableviewData(_imageList, data, _siraLog);
             await AnimateToSelectionCanvas();
             _imageList.tableView.ReloadData();
         }

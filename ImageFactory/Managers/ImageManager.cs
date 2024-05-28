@@ -1,6 +1,7 @@
 ﻿using ImageFactory.Components;
 using ImageFactory.Interfaces;
 using ImageFactory.Models;
+using SiraUtil.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,16 +17,18 @@ namespace ImageFactory.Managers
         private readonly CachedMediaAsyncLoader _cachedMediaAsyncLoader;
         private readonly IImageFactorySpriteLoader _imageFactorySpriteLoader;
         private readonly List<IFSprite> _recentlyDeanimated = new List<IFSprite>();
+        private readonly SiraLog _siraLog;
 
         public event EventHandler<ImageUpdateArgs>? ImageUpdated;
 
-        public ImageManager(MetadataStore metadataStore, IFSprite.Pool spritePool, IImageFactorySpriteLoader imageFactorySpriteLoader, CachedMediaAsyncLoader cachedMediaAsyncLoader)
+        public ImageManager(MetadataStore metadataStore, IFSprite.Pool spritePool, IImageFactorySpriteLoader imageFactorySpriteLoader, CachedMediaAsyncLoader cachedMediaAsyncLoader, SiraLog siraLog)
         {
             _metadataStore = metadataStore;
             _loadedImages = new List<IFImage>();
             _cachedMediaAsyncLoader = cachedMediaAsyncLoader;
             _imageFactorySpriteLoader = imageFactorySpriteLoader;
             _spritePool = new MemoryPoolContainer<IFSprite>(spritePool);
+            _siraLog = siraLog;
         }
 
         public IFSprite Spawn(IFSaveData data)

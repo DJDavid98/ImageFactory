@@ -1,6 +1,7 @@
 ﻿using ImageFactory.Managers;
 using ImageFactory.Models;
 using IPA.Utilities.Async;
+using SiraUtil.Logging;
 using System;
 using System.Threading.Tasks;
 using Tweening;
@@ -17,6 +18,7 @@ namespace ImageFactory.Components
         [SerializeField] private SpriteRenderer _spriteRenderer = null!;
         [Inject] private readonly TimeTweeningManager _tweeningManager = null!;
         [Inject] private readonly ResourceLoader _resourceLoader = null!;
+        [Inject] private readonly SiraLog _siraLog = null!;
 
         // If we're updating the size of an animated image, we need to recalculate its position extents to remain centered.
         public Vector2 Size
@@ -116,14 +118,14 @@ namespace ImageFactory.Components
 
         protected void Start()
         {
-            UnityMainThreadTaskScheduler.Factory.StartNew(async () =>
+            try
             {
-                try
-                {
-                    _spriteRenderer.material = await _resourceLoader.LoadSpriteMaterial();
-                }
-                catch { }
-            });
+                _spriteRenderer.material = _resourceLoader.LoadSpriteMaterial();
+            }
+            catch (Exception e)
+            {
+                _siraLog.Error($"Failed to load sprite renderer material: {e.Message}\n{e.StackTrace}");
+            }
         }
 
         protected void OnEnable()
