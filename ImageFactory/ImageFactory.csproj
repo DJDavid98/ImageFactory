@@ -37,12 +37,18 @@
     <None Remove="Resources\pixel.png" />
     <None Remove="Resources\reset.png" />
     <None Remove="Resources\settings.png" />
+    <None Remove="Resources\sprite.assetbundle" />
     <None Remove="Views\edit-image-view.bsml" />
     <None Remove="Views\info-view.bsml" />
     <None Remove="Views\new-image-view.bsml" />
     <None Remove="Views\saved-image-view.bsml" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="AssetBundleLoadingTools">
+      <HintPath>$(BeatSaberDir)\Plugins\AssetBundleLoadingTools.dll</HintPath>
+      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="BeatmapCore">
       <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\BeatmapCore.dll</HintPath>
       <Private>False</Private>
@@ -77,6 +83,11 @@
     </Reference>
     <Reference Include="Tweening">
       <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\Tweening.dll</HintPath>
+      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Unity.ResourceManager">
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\Unity.ResourceManager.dll</HintPath>
       <Private>False</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -152,6 +163,7 @@
     <EmbeddedResource Include="Resources\pixel.png" />
     <EmbeddedResource Include="Resources\reset.png" />
     <EmbeddedResource Include="Resources\settings.png" />
+    <EmbeddedResource Include="Resources\sprite.assetbundle" />
     <EmbeddedResource Include="Views\edit-image-view.bsml" />
     <EmbeddedResource Include="Views\info-view.bsml" />
     <EmbeddedResource Include="Views\new-image-view.bsml" />

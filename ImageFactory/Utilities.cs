@@ -1,8 +1,10 @@
-﻿using BeatSaberMarkupLanguage.Animations;
+﻿using AssetBundleLoadingTools.Utilities;
+using BeatSaberMarkupLanguage.Animations;
 using ImageFactory.Models;
 using SiraUtil.Logging;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -11,7 +13,6 @@ namespace ImageFactory
 {
     internal static class Utilities
     {
-
         public static async Task<ProcessedAnimation> ProcessAnimation(AnimationFormat format, byte[] data)
         {
             AnimationData animationData;
@@ -37,36 +38,42 @@ namespace ImageFactory
             {
                 if (_uiNoGlowRoundEdgeMaterial == null)
                 {
-                    _uiNoGlowRoundEdgeMaterial = Resources.FindObjectsOfTypeAll<Material>().First(m => m.name == "UINoGlowRoundEdge");
+                    _uiNoGlowRoundEdgeMaterial = GetResourceObjectByName<Material>("UINoGlowRoundEdge");
                 }
                 return _uiNoGlowRoundEdgeMaterial;
             }
         }
 
-        private static Material _spritesDefaultMaterial = null!;
-        public static Material SpritesDefaultMaterial
+        private static Material _spritesMaterial = null!;
+        public static Material SpritesMaterial
         {
             get
             {
-                if (_spritesDefaultMaterial == null)
+                if (_spritesMaterial == null)
                 {
-                    _spritesDefaultMaterial = Resources.FindObjectsOfTypeAll<Material>().First(m => m.name == "Sprites-Default");
+                    var srcMaterialName = "Sprites-Default";
+                    _spritesMaterial = new Material(GetResourceObjectByName<Material>(srcMaterialName));
+                    _spritesMaterial.name = $"{srcMaterialName} (ImageFactory Clone)";
                 }
-                return _spritesDefaultMaterial;
+                return _spritesMaterial;
+            }
+
+            set {
+                _spritesMaterial = value;
             }
         }
 
-        private static Shader _shader = null!;
-        public static Shader ImageShader
+        public static T GetResourceObjectByName<T>(string itemName) where T : UnityEngine.Object
         {
-            get
+            var items = Resources.FindObjectsOfTypeAll<T>();
+            var foundItem = items.FirstOrDefault(m => m.name == itemName);
+            if (foundItem == null)
             {
-                if (_shader == null)
-                {
-                    _shader = Resources.FindObjectsOfTypeAll<Shader>().First(s => s.name == "Custom/CustomParticles");
-                }
-                return _shader;
+                var joinString = "\n\t- ";
+                var available = string.Join(joinString, new HashSet<string>(items.Select(m => m.name).ToArray()).OrderBy(name => name));
+                throw new Exception($"Object {itemName} not found\nAvailable objects:{joinString}{available}");
             }
+            return foundItem;
         }
 
         public static void InitializeCustomCellTableviewData(BeatSaberMarkupLanguage.Components.CustomCellListTableData _imageList, IList data, SiraLog logger)
@@ -79,6 +86,20 @@ namespace ImageFactory
             {
                 logger.Error($"Failed to add images to list: {ex.Message}\n{ex.StackTrace}");
             }
+        }
+
+        public static void FixShader(Material m, string debugSource, SiraLog logger)
+        {
+            var replacementInfo = ShaderRepair.FixShaderOnMaterial(m);
+            if (!replacementInfo.AllShadersReplaced)
+            {
+                logger.Warn($"[{debugSource}] Missing shader replacement data:");
+                foreach (var shaderName in replacementInfo.MissingShaderNames)
+                {
+                    logger.Warn($"\t- {shaderName}");
+                }
+            }
+            else logger.Debug($"[{debugSource}] All shaders replaced.");
         }
     }
 }

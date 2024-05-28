@@ -118,14 +118,17 @@ namespace ImageFactory.Components
 
         protected void Start()
         {
-            try
+            UnityMainThreadTaskScheduler.Factory.StartNew(async () =>
             {
-                _spriteRenderer.material = _resourceLoader.LoadSpriteMaterial();
-            }
-            catch (Exception e)
-            {
-                _siraLog.Error($"Failed to load sprite renderer material: {e.Message}\n{e.StackTrace}");
-            }
+                try
+                {
+                    _spriteRenderer.material = await _resourceLoader.LoadSpriteMaterial();
+                }
+                catch (Exception e)
+                {
+                    _siraLog.Error($"Failed to load sprite renderer material: {e.Message}, falling back to {_spriteRenderer.material.name}\n{e.StackTrace}");
+                }
+            });
         }
 
         protected void OnEnable()

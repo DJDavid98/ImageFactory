@@ -109,7 +109,7 @@ namespace ImageFactory.UI
 
             var data = loadedImages.Select(image => new NewImageCell(image, ClickedImageCell)).ToList();
             Utilities.InitializeCustomCellTableviewData(_imageList, data, _siraLog);
-            _imageList.tableView.ReloadDataKeepingPosition();
+            _imageList.tableView.ReloadData();
         }
 
         private void ClickedImageCell(IFImage image)
