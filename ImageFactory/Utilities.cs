@@ -1,6 +1,7 @@
 ﻿using BeatSaberMarkupLanguage.Animations;
 using ImageFactory.Models;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -8,17 +9,23 @@ namespace ImageFactory
 {
     internal static class Utilities
     {
-        public static Task<ProcessedAnimation> ProcessAnimation(AnimationType type, byte[] data)
+
+        public static async Task<ProcessedAnimation> ProcessAnimation(AnimationFormat format, byte[] data)
         {
-            return Task.Run(() =>
+            AnimationData animationData;
+            switch(format)
             {
-                TaskCompletionSource<ProcessedAnimation> source = new TaskCompletionSource<ProcessedAnimation>();
-                AnimationLoader.Process(type, data, (Texture2D tex, Rect[] uvs, float[] delays, int width, int height) =>
-                {
-                    source.SetResult(new ProcessedAnimation(tex, uvs, delays, width, height));
-                });
-                return source.Task;
-            });
+                case AnimationFormat.GIF:
+                    animationData = await AnimationLoader.ProcessGifAsync(data);
+                    break;
+                case AnimationFormat.APNG:
+                    animationData = await AnimationLoader.ProcessApngAsync(data);
+                    break;
+                default:
+                    throw new System.Exception($"Unknown animation format {format}");
+            }
+
+            return new ProcessedAnimation(animationData.atlas, animationData.uvs, animationData.delays, animationData.width, animationData.height);
         }
 
         private static Material _roundEdge = null!;

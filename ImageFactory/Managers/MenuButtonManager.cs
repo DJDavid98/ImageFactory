@@ -26,11 +26,17 @@ namespace ImageFactory.Managers
 
         public void Dispose()
         {
-            // Because of the way singletons work, without this if statement they might
+            // Because of the way singletons work, without this they might
             // be destroyed by the time the menu button manager is disposing.
             // PersistentSingletons are WeirdChamp.
-            if (BSMLParser.IsSingletonAvailable && MenuButtons.IsSingletonAvailable)
+            try
+            {
                 MenuButtons.instance.UnregisterButton(_menuButton);
+            }
+            catch (ObjectDisposedException)
+            {
+                // ignore
+            }
         }
 
         private void ShowFlowCoordinator()

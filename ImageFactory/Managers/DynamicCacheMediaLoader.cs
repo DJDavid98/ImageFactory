@@ -37,7 +37,7 @@ namespace ImageFactory.Managers
                 if (!response.Successful)
                     return null!;
 
-                sprite = BeatSaberMarkupLanguage.Utilities.LoadSpriteRaw(await response.ReadAsByteArrayAsync());
+                sprite = await BeatSaberMarkupLanguage.Utilities.LoadSpriteAsync(await response.ReadAsByteArrayAsync());
             }
             else
             {
@@ -45,7 +45,7 @@ namespace ImageFactory.Managers
                 using MemoryStream ms = new MemoryStream();
                 await stream.CopyToAsync(ms);
 
-                sprite = BeatSaberMarkupLanguage.Utilities.LoadSpriteRaw(ms.ToArray());
+                sprite = await BeatSaberMarkupLanguage.Utilities.LoadSpriteAsync(ms.ToArray());
             }
 
             if (_cache.ContainsKey(path))

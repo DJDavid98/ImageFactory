@@ -4,6 +4,7 @@ using BeatSaberMarkupLanguage.Components.Settings;
 using BeatSaberMarkupLanguage.Parser;
 using ImageFactory.Managers;
 using ImageFactory.Models;
+using ModestTree;
 using SiraUtil.Tools;
 using System;
 using System.Collections.Generic;
@@ -140,7 +141,10 @@ namespace ImageFactory.UI
                 _presentationOptions = _store.Values().Cast<object>().ToList();
             }
 
-            _presentationList.data.AddRange(_activeValue.Constructors.Select(c => new InternalHost(c)));
+            var constructors = _activeValue.Constructors.Select(c => new InternalHost(c));
+            foreach (var constructor in constructors) { 
+                _presentationList.data.Add(constructor);
+            }
             if (_activeValue.HasDuration)
             {
                 var durHost = new InternalHost();
