@@ -75,6 +75,27 @@ namespace ImageFactory.UI
             set { _imageEditorManager.Size = new Vector2(_imageEditorManager.Size.x, value); NotifyPropertyChanged(); _floatingScreen.handle.transform.localScale = Vector3.one / 5f * _imageEditorManager.Size.x; }
         }
 
+        [UIValue("glow")]
+        protected float Glow
+        {
+            get => _imageEditorManager.Glow;
+            set { _imageEditorManager.Glow = value; NotifyPropertyChanged(); }
+        }
+
+        [UIValue("src-blend")]
+        protected float SourceBlend
+        {
+            get => _imageEditorManager.SourceBlend;
+            set { _imageEditorManager.SourceBlend = value; NotifyPropertyChanged(); }
+        }
+
+        [UIValue("dst-blend")]
+        protected float DestinationBlend
+        {
+            get => _imageEditorManager.DestinationBlend;
+            set { _imageEditorManager.DestinationBlend = value; NotifyPropertyChanged(); }
+        }
+
         [Inject]
         public void Construct(Config config, SiraLog siraLog, DiContainer container, ImageManager imageManager, ImageEditorManager imageEditorManager, PhysicsRaycasterWithCache cacheRaycaster, LevelSearchViewController levelSearchViewController)
         {
@@ -129,6 +150,9 @@ namespace ImageFactory.UI
                 saveData.Enabled = clone.Enabled;
                 saveData.Position = clone.Position;
                 saveData.Rotation = clone.Rotation;
+                saveData.Glow = clone.Glow;
+                saveData.SourceBlend = clone.SourceBlend;
+                saveData.DestinationBlend = clone.DestinationBlend;
                 saveData.Presentation.PresentationID = val.Item1;
                 saveData.Presentation.Duration = val.Item3 ?? 0f;
                 saveData.Presentation.Value = val.Item2;
@@ -151,6 +175,9 @@ namespace ImageFactory.UI
             Enabled = Enabled;
             XScale = XScale;
             YScale = YScale;
+            Glow = Glow;
+            SourceBlend = SourceBlend;
+            DestinationBlend = DestinationBlend;
             _presentationHost.Update();
         }
         private void NameFieldUpdated(InputFieldView field)

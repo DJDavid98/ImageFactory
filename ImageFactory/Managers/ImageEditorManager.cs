@@ -31,7 +31,9 @@ namespace ImageFactory.Managers
                 Position = saveData.Position,
                 Rotation = saveData.Rotation,
                 Presentation = saveData.Presentation,
-                LocalFilePath = saveData.LocalFilePath
+                LocalFilePath = saveData.LocalFilePath,
+                SourceBlend = saveData.SourceBlend,
+                DestinationBlend = saveData.DestinationBlend,
             };
             _saveAction = delegate () { saved?.Invoke(_lastClone!); };
             _activeSprite = _spritePool.Spawn();
@@ -39,6 +41,8 @@ namespace ImageFactory.Managers
             _activeSprite.Position = _lastClone.Position;
             _activeSprite.Rotation = _lastClone.Rotation;
             _activeSprite.Size = _lastClone.Size;
+            _activeSprite.SourceBlend = _lastClone.SourceBlend;
+            _activeSprite.DestinationBlend = _lastClone.DestinationBlend;
             return _activeSprite.transform;
         }
 
@@ -84,6 +88,45 @@ namespace ImageFactory.Managers
                 {
                     _activeSprite.Size = value;
                     _lastClone.Size = value;
+                }
+            }
+        }
+
+        public float Glow
+        {
+            get => (_activeSprite != null) ? _activeSprite.Glow : default;
+            set
+            {
+                if (_activeSprite != null && _lastClone != null)
+                {
+                    _activeSprite.Glow = value;
+                    _lastClone.Glow = value;
+                }
+            }
+        }
+
+        public float SourceBlend
+        {
+            get => (_activeSprite != null) ? _activeSprite.SourceBlend : default;
+            set
+            {
+                if (_activeSprite != null && _lastClone != null)
+                {
+                    _activeSprite.SourceBlend = value;
+                    _lastClone.SourceBlend = value;
+                }
+            }
+        }
+
+        public float DestinationBlend
+        {
+            get => (_activeSprite != null) ? _activeSprite.DestinationBlend : default;
+            set
+            {
+                if (_activeSprite != null && _lastClone != null)
+                {
+                    _activeSprite.DestinationBlend = value;
+                    _lastClone.DestinationBlend = value;
                 }
             }
         }

@@ -7,6 +7,8 @@
       <bool-setting text="Enabled" value="enabled" apply-on-change="true" bind-value="true" />
       <increment-setting text="Scale X" increment="0.1" value="scale-x" apply-on-change="true" bind-value="true" />
       <increment-setting text="Scale Y" increment="0.1" value="scale-y" apply-on-change="true" bind-value="true" />
+      <increment-setting text="Source Blend" digits="0" min="0" max="10" increment="1" value="src-blend" apply-on-change="true" bind-value="true" />
+	  <increment-setting text="Destination Blend" digits="0" min="0" max="10" increment="1" value="dst-blend" apply-on-change="true" bind-value="true" />
     </vertical>
     <macro.as-host host="presentation-host">
       <vertical horizontal-fit="PreferredSize" vertical-fit="PreferredSize" pref-width="90" pref-height="34" bg="round-rect-panel" pad="2">

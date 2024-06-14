@@ -52,6 +52,11 @@ namespace ImageFactory.Managers
 
             _cachedMaterial = new Material(((GameObject)spriteReq.asset).GetComponent<Renderer>().material);
             Utilities.FixShader(_cachedMaterial, "ResourceLoader#LoadSpriteMaterial", _siraLog);
+            // For debuging: check available shader properties
+            // Utilities.LogShaderProperties(_cachedMaterial.shader, _siraLog);
+            _cachedMaterial.SetFloat("_Glossiness", 0f);
+            _cachedMaterial.SetFloat("_SpecularHighlights", 0f);
+            _cachedMaterial.SetFloat("_GlossyReflections", 0f);
             _bundle.Unload(false);
             _isProcessing = false;
             return _cachedMaterial;

@@ -111,6 +111,23 @@ namespace ImageFactory.Components
             }
         }
 
+        public float SourceBlend { 
+            get => _spriteRenderer.material.GetFloat("_SrcBlend");
+            set => _spriteRenderer.material.SetFloat("_SrcBlend", value);
+        }
+
+        public float DestinationBlend
+        { 
+            get => _spriteRenderer.material.GetFloat("_DstBlend");
+            set => _spriteRenderer.material.SetFloat("_DstBlend", value);
+        }
+
+        public float Glow
+        {
+            get => _spriteRenderer.material.GetFloat("_Glow");
+            set => _spriteRenderer.material.SetFloat("_Glow", value);
+        }
+
         internal void Setup(SpriteRenderer renderer)
         {
             _spriteRenderer = renderer;
@@ -122,7 +139,15 @@ namespace ImageFactory.Components
             {
                 try
                 {
-                    _spriteRenderer.material = await _resourceLoader.LoadSpriteMaterial();
+                    // Save values set before the new material was loaded
+                    var lastGlow = Glow;
+                    var lastSourceBlend = SourceBlend;
+                    var lastDestinationBlend = DestinationBlend;
+                    _spriteRenderer.material = new Material(await _resourceLoader.LoadSpriteMaterial());
+                    // Restore values
+                    Glow = lastGlow;
+                    SourceBlend = lastSourceBlend;
+                    DestinationBlend = lastDestinationBlend;
                 }
                 catch (Exception e)
                 {
