@@ -15,15 +15,13 @@ namespace ImageFactory.Managers
     {
         private readonly SiraLog _siraLog;
         private readonly IAnimationStateUpdater _animationStateUpdater;
-        private readonly CachedMediaAsyncLoader _cachedMediaAsyncLoader;
         private readonly CancellationTokenSource _cancellationTokenSource;
         private readonly Dictionary<string, IFImage> _imageCache = new Dictionary<string, IFImage>();
 
-        public CachedIFSpriteLoader(SiraLog siraLog, IAnimationStateUpdater animationStateUpdater, CachedMediaAsyncLoader cachedMediaAsyncLoader)
+        public CachedIFSpriteLoader(SiraLog siraLog, IAnimationStateUpdater animationStateUpdater)
         {
             _siraLog = siraLog;
             _animationStateUpdater = animationStateUpdater;
-            _cachedMediaAsyncLoader = cachedMediaAsyncLoader;
             _cancellationTokenSource = new CancellationTokenSource();
         }
 
@@ -51,7 +49,7 @@ namespace ImageFactory.Managers
                     // Load images through our injected CachedMediaAsyncLoader
 
                     Stopwatch watch = Stopwatch.StartNew();
-                    Sprite sprite = await _cachedMediaAsyncLoader.LoadSpriteAsync(filePath, _cancellationTokenSource.Token);
+                    Sprite sprite = await MediaAsyncLoader.LoadSpriteAsync(filePath, _cancellationTokenSource.Token);
                     sprite.texture.wrapMode = TextureWrapMode.Clamp;
                     watch.Stop();
 

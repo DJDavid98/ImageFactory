@@ -101,5 +101,21 @@ namespace ImageFactory
             }
             else logger.Debug($"[{debugSource}] All shaders replaced.");
         }
+
+        public static void LogShaderProperties(Shader shader, SiraLog logger)
+        {
+            List<string> properties = new List<string>();
+            var shaderPropertyCount = shader.GetPropertyCount();
+            for (int i = 0; i < shaderPropertyCount; i++)
+            {
+                var propertyType = shader.GetPropertyType(i).ToString();
+                var propertyRange = propertyType == "Range" ? shader.GetPropertyRangeLimits(i).ToString() : "";
+                var propertyDefault = propertyType == "Range" || propertyType == "Float" ? shader.GetPropertyDefaultFloatValue(i).ToString() : (
+                    propertyType == "Vector" ? shader.GetPropertyDefaultVectorValue(i).ToString() : ""
+                );
+                properties.Add(shader.GetPropertyName(i) + $" ({propertyType};{propertyDefault};{propertyRange})");
+            }
+            logger.Debug("Shader property names: " + string.Join(",", properties));
+        }
     }
 }

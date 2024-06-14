@@ -192,6 +192,9 @@ namespace ImageFactory.Presenters
             sprite.Position = newData.Position;
             sprite.Rotation = newData.Rotation;
             sprite.Size = newData.Size;
+            sprite.Glow = newData.Glow;
+            sprite.SourceBlend = newData.SourceBlend;
+            sprite.DestinationBlend = newData.DestinationBlend;
         }
 
         public void Dispose()

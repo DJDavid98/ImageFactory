@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
+using ImageFactory.Interfaces;
 
 namespace ImageFactory.UI
 {
@@ -234,7 +235,7 @@ namespace ImageFactory.UI
             set { _config.IgnoreTextAndHUDs = value; NotifyPropertyChanged(); }
         }
 
-        #endregion 
+        #endregion
 
         private class ClickableSubIcon
         {

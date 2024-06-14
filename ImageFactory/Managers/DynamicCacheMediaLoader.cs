@@ -1,4 +1,5 @@
-﻿using IPA.Loader;
+﻿using ImageFactory.Interfaces;
+using IPA.Loader;
 using SiraUtil;
 using SiraUtil.Web;
 using SiraUtil.Zenject;
@@ -53,6 +54,11 @@ namespace ImageFactory.Managers
 
 
             return sprite;
+        }
+
+        public void ClearCache()
+        {
+            _cache.Clear();
         }
     }
 }

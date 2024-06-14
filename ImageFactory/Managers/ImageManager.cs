@@ -1,10 +1,12 @@
 ﻿using ImageFactory.Components;
 using ImageFactory.Interfaces;
 using ImageFactory.Models;
+using SiraUtil.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace ImageFactory.Managers
 {
@@ -13,17 +15,15 @@ namespace ImageFactory.Managers
         private readonly List<IFImage> _loadedImages;
         private readonly MetadataStore _metadataStore;
         private readonly MemoryPoolContainer<IFSprite> _spritePool;
-        private readonly CachedMediaAsyncLoader _cachedMediaAsyncLoader;
         private readonly IImageFactorySpriteLoader _imageFactorySpriteLoader;
         private readonly List<IFSprite> _recentlyDeanimated = new List<IFSprite>();
 
         public event EventHandler<ImageUpdateArgs>? ImageUpdated;
 
-        public ImageManager(MetadataStore metadataStore, IFSprite.Pool spritePool, IImageFactorySpriteLoader imageFactorySpriteLoader, CachedMediaAsyncLoader cachedMediaAsyncLoader)
+        public ImageManager(MetadataStore metadataStore, IFSprite.Pool spritePool, IImageFactorySpriteLoader imageFactorySpriteLoader)
         {
             _metadataStore = metadataStore;
             _loadedImages = new List<IFImage>();
-            _cachedMediaAsyncLoader = cachedMediaAsyncLoader;
             _imageFactorySpriteLoader = imageFactorySpriteLoader;
             _spritePool = new MemoryPoolContainer<IFSprite>(spritePool);
         }
@@ -31,11 +31,13 @@ namespace ImageFactory.Managers
         public IFSprite Spawn(IFSaveData data)
         {
             var sprite = _spritePool.Spawn();
-            sprite.gameObject.transform.SetParent(_cachedMediaAsyncLoader.transform);
             sprite.gameObject.transform.SetParent(null);
             sprite.Position = data.Position;
             sprite.Rotation = data.Rotation;
             sprite.Size = data.Size;
+            sprite.Glow = data.Glow;
+            sprite.SourceBlend = data.SourceBlend;
+            sprite.DestinationBlend = data.DestinationBlend;
             sprite.AnimateIn();
             return sprite;
         }
@@ -52,8 +54,6 @@ namespace ImageFactory.Managers
                 sprite.AnimateOut();
                 await Task.Delay((int)(IFSprite.ANIM_TIME * 1000f));
             }
-            // Pulls the sprite back into the root scene so it doesn't get destroyed if it's current scene is being destroyed.
-            sprite.gameObject.transform.SetParent(_cachedMediaAsyncLoader.transform);
             sprite.gameObject.transform.SetParent(null);
             sprite.KillAllTweens();
             sprite.Image = null;

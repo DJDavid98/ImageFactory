@@ -57,6 +57,9 @@
       <HintPath>$(BeatSaberDir)\Plugins\BSML.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="DataModels">
+      <HintPath>E:\BSManager\BSInstances\Beat Saber 1.37.0\Beat Saber_Data\Managed\DataModels.dll</HintPath>
+    </Reference>
     <Reference Include="GameplayCore">
       <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\GameplayCore.dll</HintPath>
       <Private>False</Private>
@@ -64,6 +67,11 @@
     <Reference Include="HMRendering">
       <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\HMRendering.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="MediaLoader">
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\MediaLoader.dll</HintPath>
+      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Rendering">
       <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\Rendering.dll</HintPath>

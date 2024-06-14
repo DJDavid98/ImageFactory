@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo(GeneratedStore.AssemblyVisibilityTarget)]
 namespace ImageFactory
 {
-    internal class Config
+    public class Config
     {
         [NonNullable, UseConverter(typeof(VersionConverter))]
         public virtual Hive.Versioning.Version Version { get; set; } = new Hive.Versioning.Version("0.0.0");
