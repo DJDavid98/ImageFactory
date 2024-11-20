@@ -28,7 +28,7 @@ namespace ImageFactory
                     throw new System.Exception($"Unknown animation format {format}");
             }
 
-            return new ProcessedAnimation(animationData.atlas, animationData.uvs, animationData.delays, animationData.width, animationData.height);
+            return new ProcessedAnimation(animationData.Atlas, animationData.Uvs, animationData.Delays, animationData.Width, animationData.Height);
         }
 
         private static Material _uiNoGlowRoundEdgeMaterial = null!;
@@ -80,7 +80,7 @@ namespace ImageFactory
         {
             try
             {
-                _imageList.data = data;
+                _imageList.Data = data;
             }
             catch (Exception ex)
             {

@@ -97,7 +97,7 @@ namespace ImageFactory.Components
                     }
                     else
                     {
-                        _spriteRenderer.sprite = _image.animationData!.sprites[0];
+                        _spriteRenderer.sprite = _image.animationData!.Sprites[0];
                         if (_animator == null)
                         {
                             _animator = gameObject.AddComponent<RendererAnimationStateUpdater>();

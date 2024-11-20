@@ -98,19 +98,19 @@ namespace ImageFactory.UI
 
         public async Task LoadImages()
         {
-            foreach (var image in _imageList.data.Cast<EditImageCell>())
+            foreach (var image in _imageList.Data.Cast<EditImageCell>())
             {
                 if (image.stateUpdater != null && image.previewImage != null)
                 {
-                    image.image.animationData!.activeImages.Remove(image.previewImage);
-                    image.stateUpdater.image = null;
+                    image.image.animationData!.ActiveImages.Remove(image.previewImage);
+                    image.stateUpdater.Image = null;
                 }
             }
-            foreach (Transform pres in _imageList.tableView.contentTransform)
+            foreach (Transform pres in _imageList.TableView.contentTransform)
                 Destroy(pres.gameObject);
 
-            _imageList.data.Clear();
-            _imageList.tableView.ReloadData();
+            _imageList.Data.Clear();
+            _imageList.TableView.ReloadData();
 
             var data = new List<EditImageCell>();
             foreach (var save in _config.SaveData)
@@ -125,7 +125,7 @@ namespace ImageFactory.UI
             }
             Utilities.InitializeCustomCellTableviewData(_imageList, data, _siraLog);
             await AnimateToSelectionCanvas();
-            _imageList.tableView.ReloadData();
+            _imageList.TableView.ReloadData();
         }
 
         private void ClickedImageDelete(IFImage image, IFSaveData saveData)
@@ -162,7 +162,7 @@ namespace ImageFactory.UI
                 _ = LoadImages();
         }
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
             _imageManager.ImageUpdated -= ImageManager_ImageUpdated;
             base.OnDestroy();
@@ -197,8 +197,8 @@ namespace ImageFactory.UI
                 if (image.animationData != null)
                 {
                     stateUpdater = previewImage.gameObject.AddComponent<AnimationStateUpdater>();
-                    image.animationData.activeImages.Add(previewImage);
-                    stateUpdater.image = previewImage;
+                    image.animationData.ActiveImages.Add(previewImage);
+                    stateUpdater.Image = previewImage;
                 }
                 else
                 {

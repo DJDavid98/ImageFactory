@@ -109,7 +109,7 @@ namespace ImageFactory.UI
 
             var data = loadedImages.Select(image => new NewImageCell(image, ClickedImageCell)).ToList();
             Utilities.InitializeCustomCellTableviewData(_imageList, data, _siraLog);
-            _imageList.tableView.ReloadData();
+            _imageList.TableView.ReloadData();
         }
 
         private void ClickedImageCell(IFImage image)
@@ -157,8 +157,8 @@ namespace ImageFactory.UI
                 if (image.animationData != null)
                 {
                     var stateUpdater = _previewImage.gameObject.AddComponent<AnimationStateUpdater>();
-                    image.animationData.activeImages.Add(_previewImage);
-                    stateUpdater.image = _previewImage;
+                    image.animationData.ActiveImages.Add(_previewImage);
+                    stateUpdater.Image = _previewImage;
                 }
                 else
                 {

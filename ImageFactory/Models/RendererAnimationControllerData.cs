@@ -23,33 +23,33 @@ namespace ImageFactory.Models
             }
         }
 
-        internal void CheckFrame(DateTime now)
+        public new void CheckFrame(DateTime now)
         {
-            double differenceMs = (now - lastSwitch).TotalMilliseconds;
-            if (differenceMs < delays[uvIndex])
+            double differenceMs = (now - LastSwitch).TotalMilliseconds;
+            if (differenceMs < Delays[UvIndex])
                 return;
 
-            if (_isDelayConsistent && delays[uvIndex] <= 10 && differenceMs < 100)
+            if (_isDelayConsistent && Delays[UvIndex] <= 10 && differenceMs < 100)
             {
                 // Bump animations with consistently 10ms or lower frame timings to 100ms
                 return;
             }
 
-            lastSwitch = now;
+            LastSwitch = now;
             do
             {
-                uvIndex++;
-                if (uvIndex >= uvs.Length)
-                    uvIndex = 0;
+                UvIndex++;
+                if (UvIndex >= this.uvs.Length)
+                    UvIndex = 0;
             }
-            while (!_isDelayConsistent && delays[uvIndex] == 0);
+            while (!_isDelayConsistent && Delays[UvIndex] == 0);
 
-            if (activeImages.Count != 0)
+            if (ActiveImages.Count != 0)
             {
-                foreach (Image image in activeImages)
+                foreach (Image image in ActiveImages)
                 {
                     if (image != null && image.isActiveAndEnabled)
-                        image.sprite = sprites[uvIndex];
+                        image.sprite = Sprites[UvIndex];
                 }
             }
         }

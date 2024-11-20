@@ -101,7 +101,7 @@ namespace ImageFactory.UI
             set { _modalActionText = value; NotifyPropertyChanged(); }
         }
 
-        protected override void DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling)
+        public override void DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling)
         {
             base.DidActivate(firstActivation, addedToHierarchy, screenSystemEnabling);
             if (firstActivation)

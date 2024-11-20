@@ -21,7 +21,7 @@ namespace ImageFactory.Managers
 
         public void Initialize()
         {
-            MenuButtons.instance.RegisterButton(_menuButton);
+            MenuButtons.Instance.RegisterButton(_menuButton);
         }
 
         public void Dispose()
@@ -31,7 +31,7 @@ namespace ImageFactory.Managers
             // PersistentSingletons are WeirdChamp.
             try
             {
-                MenuButtons.instance.UnregisterButton(_menuButton);
+                MenuButtons.Instance.UnregisterButton(_menuButton);
             }
             catch (ObjectDisposedException)
             {

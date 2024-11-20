@@ -28,9 +28,9 @@ namespace ImageFactory.Models
             loadTime = timeToLoad;
             animationData = animData;
             this.metadata = metadata;
-            sprite = animData.sprite;
-            width = (int)animData.sprites[0].rect.width;
-            height = (int)animData.sprites[0].rect.height;
+            sprite = animData.Sprites[0];
+            width = (int)animData.Sprites[0].rect.width;
+            height = (int)animData.Sprites[0].rect.height;
         }
 
         public struct Metadata

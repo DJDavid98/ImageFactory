@@ -47,20 +47,20 @@ namespace ImageFactory.UI
         public void Present(IFImage image, Action<IFImage> callback)
         {
             _callback = delegate () { callback.Invoke(image); };
-            if (_lastControllerData != null && _lastControllerData.activeImages.Contains(_preview))
-                _lastControllerData.activeImages.Remove(_preview);
+            if (_lastControllerData != null && _lastControllerData.ActiveImages.Contains(_preview))
+                _lastControllerData.ActiveImages.Remove(_preview);
             if (image.animationData != null)
             {
                 _preview.material = _originalMaterial;
                 _lastControllerData = image.animationData;
-                _lastControllerData.activeImages.Add(_preview);
-                _animationState.image = _preview;
+                _lastControllerData.ActiveImages.Add(_preview);
+                _animationState.Image = _preview;
             }
             else
             {
                 _preview.material = Utilities.UINoGlowRoundEdge;
                 _preview.sprite = image.sprite;
-                _animationState.image = null;
+                _animationState.Image = null;
             }
             _preview.sprite = image.sprite;
             var fileSize = FileSizeExtension(image.metadata.size);

@@ -132,8 +132,8 @@ namespace ImageFactory.UI
             // child of the handle screen.
             _floatingScreen.gameObject.SetActive(true);
             _floatingScreen.SetRootViewController(_dummyView, AnimationType.None);
-            _floatingScreen.handle.transform.localScale = Vector3.one / 5f * saveData.Size;
-            _floatingScreen.handle.gameObject.transform.localPosition = Vector3.zero;
+            _floatingScreen.Handle.transform.localScale = Vector3.one / 5f * saveData.Size;
+            _floatingScreen.Handle.gameObject.transform.localPosition = Vector3.zero;
             Transform tForm = _imageEditorManager.Present(image, saveData, clone =>
             {
                 var val = _presentationHost.Export();
@@ -161,8 +161,8 @@ namespace ImageFactory.UI
             });
             _floatingScreen.ScreenPosition = _imageEditorManager.Position;
             _floatingScreen.ScreenRotation = _imageEditorManager.Rotation;
-            _floatingScreen.handle.gameObject.transform.localPosition = Vector3.zero;
-            _floatingScreen.handle.gameObject.transform.position = saveData.Position;
+            _floatingScreen.Handle.gameObject.transform.localPosition = Vector3.zero;
+            _floatingScreen.Handle.gameObject.transform.position = saveData.Position;
             tForm.transform.SetParent(_floatingScreen.transform, true);
             _editorFieldView.SetText(_imageEditorManager.Name);
             Enabled = Enabled;
@@ -177,13 +177,13 @@ namespace ImageFactory.UI
             _imageEditorManager.Name = field.text;
         }
 
-        protected override void DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling)
+        public override void DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling)
         {
             base.DidActivate(firstActivation, addedToHierarchy, screenSystemEnabling);
             _editorFieldView.onValueChanged.AddListener(NameFieldUpdated);
         }
 
-        protected override void DidDeactivate(bool removedFromHierarchy, bool screenSystemDisabling)
+        public override void DidDeactivate(bool removedFromHierarchy, bool screenSystemDisabling)
         {
             _presentationHost.Reset();
             _imageManager.ReanimateAll();

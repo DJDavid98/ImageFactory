@@ -12,7 +12,7 @@ namespace ImageFactory.Components
         {
             if (Renderer != null && ControllerData != null)
             {
-                Renderer.sprite = ControllerData.sprites[ControllerData.uvIndex];
+                Renderer.sprite = ControllerData.Sprites[ControllerData.UvIndex];
             }
         }
     }

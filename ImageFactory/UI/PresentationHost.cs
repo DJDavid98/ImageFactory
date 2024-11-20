@@ -89,10 +89,10 @@ namespace ImageFactory.UI
                 return;
 
             _activeValue = value;
-            _presentationList.data.Clear();
-            _presentationList.tableView.ReloadData();
+            _presentationList.Data.Clear();
+            _presentationList.TableView.ReloadData();
 
-            foreach (Transform pres in _presentationList.tableView.contentTransform)
+            foreach (Transform pres in _presentationList.TableView.contentTransform)
                 UnityEngine.Object.Destroy(pres.gameObject);
 
             _presentationOptions = _store.Values().Cast<object>().ToList();
@@ -143,19 +143,19 @@ namespace ImageFactory.UI
 
             var constructors = _activeValue.Constructors.Select(c => new InternalHost(c));
             foreach (var constructor in constructors) { 
-                _presentationList.data.Add(constructor);
+                _presentationList.Data.Add(constructor);
             }
             if (_activeValue.HasDuration)
             {
                 var durHost = new InternalHost();
-                _presentationList.data.Add(durHost);
+                _presentationList.Data.Add(durHost);
                 if (_activeValue != null && _activeValue.HasDuration && LastData != null && LastData.Duration != 0)
                     durHost.Duration = LastData.Duration;
             }
-            _presentationList.tableView.ReloadData();
+            _presentationList.TableView.ReloadData();
             _lastID = _activeValue!.ID;
 
-            _dropdown.values = _presentationOptions;
+            _dropdown.Values = _presentationOptions;
             _parserParams.EmitEvent("get");
             _dropdown.UpdateChoices();
             _justSet = false;
@@ -164,7 +164,7 @@ namespace ImageFactory.UI
         // LITERALLY PRETEND THIS DOES NOT EXIST
         public Tuple<string, string, float?> Export()
         {
-            var hosts = _presentationList.data.Cast<InternalHost>();
+            var hosts = _presentationList.Data.Cast<InternalHost>();
             var duration = hosts.FirstOrDefault(h => h.isDuration);
             var agg = (hosts.Count() == 0 || (hosts.Count() == 1 && duration != null)) ? ""
                 : hosts.Where(h => !h.isDuration).Select(f => f.Value.ToString()).Aggregate((f, n) => f + "|" + n);
