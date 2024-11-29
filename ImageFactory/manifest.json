@@ -3,7 +3,7 @@
   "id": "ImageFactory",
   "name": "ImageFactory",
   "author": "Auros",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "Place and customize images throughout your game.",
   "gameVersion": "1.38.0",
   "dependsOn": {

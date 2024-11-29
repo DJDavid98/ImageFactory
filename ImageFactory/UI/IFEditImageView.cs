@@ -143,7 +143,6 @@ namespace ImageFactory.UI
                 saveData.Enabled = clone.Enabled;
                 saveData.Position = clone.Position;
                 saveData.Rotation = clone.Rotation;
-                saveData.Glow = clone.Glow;
                 saveData.SourceBlend = clone.SourceBlend;
                 saveData.DestinationBlend = clone.DestinationBlend;
                 saveData.Presentation.PresentationID = val.Item1;

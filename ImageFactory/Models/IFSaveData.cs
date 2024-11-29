@@ -13,7 +13,6 @@ namespace ImageFactory.Models
         public virtual string LocalFilePath { get; set; } = null!;
         public virtual float SourceBlend { get; set; } = 1f;
         public virtual float DestinationBlend { get; set; } = 0f;
-        public virtual float Glow { get; set; } = 0f;
 
         [NonNullable]
         public virtual ImagePresentationData Presentation { get; set; } = new ImagePresentationData();

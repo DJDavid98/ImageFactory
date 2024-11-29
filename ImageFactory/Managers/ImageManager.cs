@@ -35,7 +35,6 @@ namespace ImageFactory.Managers
             sprite.Position = data.Position;
             sprite.Rotation = data.Rotation;
             sprite.Size = data.Size;
-            sprite.Glow = data.Glow;
             sprite.SourceBlend = data.SourceBlend;
             sprite.DestinationBlend = data.DestinationBlend;
             sprite.AnimateIn();

@@ -92,19 +92,6 @@ namespace ImageFactory.Managers
             }
         }
 
-        public float Glow
-        {
-            get => (_activeSprite != null) ? _activeSprite.Glow : default;
-            set
-            {
-                if (_activeSprite != null && _lastClone != null)
-                {
-                    _activeSprite.Glow = value;
-                    _lastClone.Glow = value;
-                }
-            }
-        }
-
         public float SourceBlend
         {
             get => (_activeSprite != null) ? _activeSprite.SourceBlend : default;
