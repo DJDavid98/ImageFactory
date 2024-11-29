@@ -1,6 +1,15 @@
 # Image Factory
 Place and customize images throughout your game.
 
+> [!NOTE]
+> This repository is a fork of https://github.com/Auros/ImageFactory for newer game versions.
+
+## Credits
+
+* [Auros](https://github.com/Auros) - original mod author
+* [Kinsi](https://github.com/kinsi55) - recompiled shaders
+* [DJDavid98](https://github.com/DJDavid98) - fork maintenance via small patches
+
 # FAQ
 
 ### How Do I Add Images?

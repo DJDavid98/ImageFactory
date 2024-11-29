@@ -1,5 +1,4 @@
-﻿using AssetBundleLoadingTools.Utilities;
-using BeatSaberMarkupLanguage.Animations;
+﻿using BeatSaberMarkupLanguage.Animations;
 using ImageFactory.Models;
 using SiraUtil.Logging;
 using System;
@@ -86,36 +85,6 @@ namespace ImageFactory
             {
                 logger.Error($"Failed to add images to list: {ex.Message}\n{ex.StackTrace}");
             }
-        }
-
-        public static void FixShader(Material m, string debugSource, SiraLog logger)
-        {
-            var replacementInfo = ShaderRepair.FixShaderOnMaterial(m);
-            if (!replacementInfo.AllShadersReplaced)
-            {
-                logger.Warn($"[{debugSource}] Missing shader replacement data:");
-                foreach (var shaderName in replacementInfo.MissingShaderNames)
-                {
-                    logger.Warn($"\t- {shaderName}");
-                }
-            }
-            else logger.Debug($"[{debugSource}] All shaders replaced.");
-        }
-
-        public static void LogShaderProperties(Shader shader, SiraLog logger)
-        {
-            List<string> properties = new List<string>();
-            var shaderPropertyCount = shader.GetPropertyCount();
-            for (int i = 0; i < shaderPropertyCount; i++)
-            {
-                var propertyType = shader.GetPropertyType(i).ToString();
-                var propertyRange = propertyType == "Range" ? shader.GetPropertyRangeLimits(i).ToString() : "";
-                var propertyDefault = propertyType == "Range" || propertyType == "Float" ? shader.GetPropertyDefaultFloatValue(i).ToString() : (
-                    propertyType == "Vector" ? shader.GetPropertyDefaultVectorValue(i).ToString() : ""
-                );
-                properties.Add(shader.GetPropertyName(i) + $" ({propertyType};{propertyDefault};{propertyRange})");
-            }
-            logger.Debug("Shader property names: " + string.Join(",", properties));
         }
     }
 }
