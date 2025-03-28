@@ -148,7 +148,10 @@ namespace ImageFactory.UI
             if (_activeValue.HasDuration)
             {
                 var durHost = new InternalHost();
-                _presentationList.Data.Add(durHost);
+                
+                // workaround for 1.40.3 complaining about _presentationList.Data being a fixed size
+                _presentationList.Data = new List<object>(_presentationList.Data.Cast<object>()) { durHost };
+                
                 if (_activeValue != null && _activeValue.HasDuration && LastData != null && LastData.Duration != 0)
                     durHost.Duration = LastData.Duration;
             }
